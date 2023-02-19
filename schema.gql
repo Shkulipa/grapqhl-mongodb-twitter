@@ -1,0 +1,214 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserType {
+  _id: String!
+  username: String!
+  email: String!
+  photo: String
+  roles: [String!]!
+}
+
+type OwnerType {
+  _id: String!
+  username: String!
+  photo: String
+}
+
+type MediaObject {
+  urlFile: String!
+  key: String!
+}
+
+type TweetType {
+  _id: String!
+  owner: OwnerType!
+  description: String!
+  media: [MediaObject!]!
+  createdAt: String!
+}
+
+type CommentType {
+  _id: String!
+  tweet: TweetType!
+  owner: OwnerType!
+  comment: String!
+  createdAt: String!
+}
+
+type Comment {
+  _id: String!
+  owner: OwnerType!
+  comment: String!
+  createdAt: String!
+}
+
+type GetCommentsType {
+  totalCount: Int!
+  comments: [Comment!]!
+}
+
+type CreateCommentType {
+  _id: String!
+  tweet: TweetType!
+  owner: OwnerType!
+  createdAt: String!
+}
+
+type DeleteCommentType {
+  _id: String!
+}
+
+type UpdateCommentType {
+  _id: String!
+  comment: String!
+  createdAt: String!
+}
+
+type SubscriptionType {
+  action: String!
+  comment: CommentType!
+}
+
+type UserQueryType {
+  totalCount: Int!
+  users: [UserType!]!
+}
+
+type Tokens {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type UserTypeResponse {
+  user: UserType!
+  tokens: Tokens!
+}
+
+type GetTweetType {
+  totalCount: Int!
+  tweets: [TweetType!]!
+}
+
+type CreateTweetType {
+  _id: String!
+  owner: OwnerType!
+  description: String!
+  media: [MediaObject!]!
+  createdAt: String!
+}
+
+type CommentForOneTweetType {
+  _id: String!
+  owner: OwnerType!
+  createdAt: String!
+  comments: [CommentType!]!
+}
+
+type GetTweetByIdType {
+  _id: String!
+  owner: OwnerType!
+  description: String!
+  media: [MediaObject!]!
+  createdAt: String!
+  comments: [CommentForOneTweetType!]!
+}
+
+type DeleteTweetType {
+  _id: String!
+}
+
+type Query {
+  getUsers(query: QueryInput!): UserQueryType!
+  getTweets(query: QueryInput!): GetTweetType!
+  getTweetById(query: GetItembyIdInput!): GetTweetByIdType!
+  getComments(getCommentsInput: GetCommentsInput!): GetCommentsType!
+}
+
+input QueryInput {
+  limit: Int!
+  page: Int!
+}
+
+input GetItembyIdInput {
+  id: String!
+}
+
+input GetCommentsInput {
+  limit: Int!
+  page: Int!
+  tweetId: String!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): UserTypeResponse!
+  login(loginUserInput: LoginUserInput!): UserTypeResponse!
+  updateUsername(updateUsernameInput: UpdateUsernameInput!): UserType!
+  createTweet(createTweetInput: CreateTweetInput!): CreateTweetType!
+  deleteTweet(deleteTweetInput: DeleteTweetInput!): DeleteTweetType!
+  updateTweet(updateTweetInput: UpdateTweetInput!): TweetType!
+  createComment(createCommentInput: CreateCommentInput!): CreateCommentType!
+  deleteComment(deleteCommentInput: DeleteCommentInput!): DeleteCommentType!
+  updateComment(updateCommentInput: UpdateCommentInput!): UpdateCommentType!
+  refreshTokens(refreshTokensInput: RefreshTokensInput!): Tokens!
+}
+
+input CreateUserInput {
+  username: String!
+  email: String!
+  password: String!
+  confirmPassword: String!
+}
+
+input LoginUserInput {
+  username: String!
+  password: String!
+}
+
+input UpdateUsernameInput {
+  newUsername: String!
+}
+
+input CreateTweetInput {
+  description: String!
+  media: [MediaInput!]!
+}
+
+input MediaInput {
+  urlFile: String!
+  key: String!
+}
+
+input DeleteTweetInput {
+  tweetId: String!
+}
+
+input UpdateTweetInput {
+  description: String!
+  tweetId: String!
+}
+
+input CreateCommentInput {
+  comment: String!
+  tweetId: String!
+}
+
+input DeleteCommentInput {
+  commentId: String!
+}
+
+input UpdateCommentInput {
+  comment: String!
+  commentId: String!
+}
+
+input RefreshTokensInput {
+  refreshToken: String!
+}
+
+type Subscription {
+  addTweet: TweetType!
+  updatedTweet(tweetId: String!): TweetType!
+  comment(tweetId: String!): SubscriptionType!
+}
