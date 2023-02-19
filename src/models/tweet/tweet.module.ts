@@ -7,6 +7,7 @@ import { JwtModule } from '../jwt/jwt.module';
 import { UserModule } from '../user/user.module';
 import { CommentSchema, Comment } from '../comment/entities/comment.entity';
 import { S3Module } from '../s3/s3.module';
+import { RedisModule } from '../redis/redis.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { S3Module } from '../s3/s3.module';
       { name: Comment.name, schema: CommentSchema },
       { name: Tweet.name, schema: TweetSchema },
     ]),
+    RedisModule,
     JwtModule,
     S3Module,
     UserModule,

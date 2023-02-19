@@ -1,10 +1,18 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import Redis from 'ioredis';
 import { Model, Types } from 'mongoose';
 import { GetItembyIdInput } from 'src/common/dto/getItembyId.input';
 import { ICurrentUser } from 'src/common/interfaces/currentUser.interfaces';
 import { QueryInput } from 'src/common/types/query.type';
 import { Comment, CommentDocument } from '../comment/entities/comment.entity';
+import { IORedisKey } from '../redis/redis.module';
 import { S3Service } from '../s3/s3.service';
 import { CreateTweetInput } from './dto/createTweet.input';
 import { DeleteTweetInput } from './dto/deleteTweet.input';
@@ -14,6 +22,7 @@ import { Tweet, TweetDocument } from './entity/tweet.entity';
 @Injectable()
 export class TweetService {
   constructor(
+    @Inject(IORedisKey) private readonly redisClient: Redis,
     @InjectModel(Tweet.name) private readonly tweetModel: Model<TweetDocument>,
     @InjectModel(Comment.name)
     private readonly commentModel: Model<CommentDocument>,
@@ -47,6 +56,10 @@ export class TweetService {
   async getTweets(query: QueryInput) {
     const { limit, page } = query;
 
+    const key = `tweets(limit:${limit}, page:${page})`;
+    const cachedTweets = await this.redisClient.get(key);
+    if (cachedTweets) return JSON.parse(cachedTweets);
+
     try {
       const tweets = await this.tweetModel
         .find()
@@ -66,6 +79,8 @@ export class TweetService {
         totalCount,
         tweets,
       };
+
+      await this.redisClient.set(key, JSON.stringify(result), 'EX', 60);
 
       return result;
     } catch (err) {

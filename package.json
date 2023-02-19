@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "docker:compose": "docker-compose up -d",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:prod": "node dist/main",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.271.0",
+    "@nestjs-modules/ioredis": "^1.0.1",
     "@nestjs/apollo": "^10.2.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
@@ -35,6 +37,7 @@
     "class-validator": "^0.14.0",
     "graphql": "^16.6.0",
     "graphql-subscriptions": "^2.0.0",
+    "ioredis": "^5.3.1",
     "joi": "^17.7.1",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",

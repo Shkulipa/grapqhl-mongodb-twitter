@@ -11,7 +11,6 @@ import { FilesModule } from '../files/files.module';
 import { TokensModule } from '../tokens/tokens.module';
 import { TweetModule } from '../tweet/tweet.module';
 import { UserModule } from '../user/user.module';
-
 @Module({
   imports: [
     ConfigModule.forRoot(modeConfig),
