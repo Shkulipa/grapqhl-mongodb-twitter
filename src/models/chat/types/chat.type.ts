@@ -1,21 +1,17 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { UserShortType } from 'src/common/types/userShort.type';
-import { TweetType } from 'src/models/tweet/types/tweet.type';
 
 @ObjectType()
-export class CommentType {
+export class Chat {
   @Field(() => String)
   _id: string;
 
-  @Field(() => TweetType)
-  tweet: TweetType;
-
   @Field(() => UserShortType)
-  owner: UserShortType;
-
-  @Field(() => String)
-  comment: string;
+  creator: UserShortType;
 
   @Field(() => String)
   createdAt: string;
+
+  @Field(() => [UserShortType])
+  members: UserShortType;
 }

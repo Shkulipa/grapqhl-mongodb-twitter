@@ -20,9 +20,8 @@ export const grapqhlConfig: ApolloDriverConfig = {
       onConnect: (connectionParams: ConnectionParams) => {
         // convert header keys to lowercase
         const connectionParamsLowerKeys = mapToLowerCase(connectionParams);
-
         return {
-          headers: connectionParamsLowerKeys.authorization,
+          headers: connectionParamsLowerKeys,
         };
       },
     },

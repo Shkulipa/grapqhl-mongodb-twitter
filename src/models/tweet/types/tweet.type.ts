@@ -1,5 +1,6 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { OwnerType } from 'src/common/types/owner.type';
+import { UserShortType } from 'src/common/types/userShort.type';
+
 import { IMedia } from 'src/models/files/interfaces/media.interfaces';
 import { MediaObject } from 'src/models/files/types/media.type';
 
@@ -8,8 +9,8 @@ export class TweetType {
   @Field(() => String)
   _id: string;
 
-  @Field(() => OwnerType)
-  owner: OwnerType;
+  @Field(() => UserShortType)
+  owner: UserShortType;
 
   @Field(() => String)
   description: string;

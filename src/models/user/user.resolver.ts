@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Subscription } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { UserType } from './types/user.type';
 import { CreateUserInput } from './dto/createUser.input';
@@ -12,7 +12,7 @@ import { UpdateUsernameInput } from './dto/updateUsername.input';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
 import { ICurrentUser } from 'src/common/interfaces/currentUser.interfaces';
-import { QueryInput } from 'src/common/types/query.type';
+import { QueryInput } from 'src/common/dto/query.type';
 
 @Resolver()
 export class UserResolver {

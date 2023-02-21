@@ -9,7 +9,7 @@ import { JwtService } from '../jwt/jwt.service';
 import { LoginUserInput } from './dto/loginUserInput';
 import { UpdateUsernameInput } from './dto/updateUsername.input';
 import { ICurrentUser } from 'src/common/interfaces/currentUser.interfaces';
-import { QueryInput } from 'src/common/types/query.type';
+import { QueryInput } from 'src/common/dto/query.type';
 
 @Injectable()
 export class UserService {

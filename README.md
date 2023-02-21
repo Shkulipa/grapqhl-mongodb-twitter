@@ -8,6 +8,14 @@ mongoose packages: (https://docs.nestjs.com/techniques/mongodb)
 dotenv: (https://docs.nestjs.com/techniques/configuration)
 1. npm i --save @nestjs/config
 
+# Run
+1. yarn docker:compose
+2. yarn start:local
+
+after "yarn docker:compose", you can check in browser db by this link:
+http://localhost:8081 (for UI of Mongo DB)
+http://localhost:8001 (for UI of Redis) or use the RedisInsight(https://redis.com/redis-enterprise/redis-insight/) (connection local will be: host - redis, port - 6379)
+
 ## CLI
 docs: https://docs.nestjs.com/cli/overview
 ```
@@ -102,4 +110,24 @@ where query variables:
 }
 ```
 
+
+subscription for comments:
+```
+subscription($tweetId: String!) {
+  comment(tweetId: $tweetId) {
+    action,
+    comment {
+      _id,
+      comment
+    }
+  }
+}
+```
+
+where query variables:
+```
+{
+  "tweetId": "63ee38db2830c239b3b22b81"
+}
+```
 

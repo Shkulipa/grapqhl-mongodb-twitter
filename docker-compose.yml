@@ -7,5 +7,39 @@ services:
       - '6379:6379'
     volumes:
       - 'redisdata:/data'
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: graphql-nestjs-twitter-redisinsight
+    restart: always
+    ports:
+      - "8001:8001"
+    depends_on:
+      - redis
+
+  mongo:
+    image: mongo
+    container_name: graphql-nestjs-twitter-mongodb
+    restart: always
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - '27018:27017'
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    volumes:
+      - mongodb-data:/data/db
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+    environment:
+      # имя контейнера на 4 строке
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+
 volumes:
   redisdata:
+  mongodb-data:

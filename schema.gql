@@ -10,10 +10,44 @@ type UserType {
   roles: [String!]!
 }
 
-type OwnerType {
+type UserShortType {
   _id: String!
   username: String!
   photo: String
+}
+
+type Chat {
+  _id: String!
+  creator: UserShortType!
+  createdAt: String!
+  members: [UserShortType!]!
+}
+
+type GetChatsType {
+  totalCount: Int!
+  chats: [Chat!]!
+}
+
+type GetChatById {
+  _id: String!
+  creator: UserShortType!
+  createdAt: String!
+  members: [UserShortType!]!
+}
+
+type UserQueryType {
+  totalCount: Int!
+  users: [UserType!]!
+}
+
+type Tokens {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type UserTypeResponse {
+  user: UserType!
+  tokens: Tokens!
 }
 
 type MediaObject {
@@ -23,7 +57,7 @@ type MediaObject {
 
 type TweetType {
   _id: String!
-  owner: OwnerType!
+  owner: UserShortType!
   description: String!
   media: [MediaObject!]!
   createdAt: String!
@@ -32,14 +66,14 @@ type TweetType {
 type CommentType {
   _id: String!
   tweet: TweetType!
-  owner: OwnerType!
+  owner: UserShortType!
   comment: String!
   createdAt: String!
 }
 
 type Comment {
   _id: String!
-  owner: OwnerType!
+  owner: UserShortType!
   comment: String!
   createdAt: String!
 }
@@ -52,7 +86,7 @@ type GetCommentsType {
 type CreateCommentType {
   _id: String!
   tweet: TweetType!
-  owner: OwnerType!
+  owner: UserShortType!
   createdAt: String!
 }
 
@@ -71,19 +105,21 @@ type SubscriptionType {
   comment: CommentType!
 }
 
-type UserQueryType {
+type Message {
+  _id: String!
+  message: String!
+  owner: UserShortType!
+  chat: Chat!
+}
+
+type GetMessageType {
   totalCount: Int!
-  users: [UserType!]!
+  messages: [Message!]!
 }
 
-type Tokens {
-  accessToken: String!
-  refreshToken: String!
-}
-
-type UserTypeResponse {
-  user: UserType!
-  tokens: Tokens!
+type SubscriptionMessageType {
+  action: String!
+  message: Message!
 }
 
 type GetTweetType {
@@ -93,7 +129,7 @@ type GetTweetType {
 
 type CreateTweetType {
   _id: String!
-  owner: OwnerType!
+  owner: UserShortType!
   description: String!
   media: [MediaObject!]!
   createdAt: String!
@@ -101,14 +137,14 @@ type CreateTweetType {
 
 type CommentForOneTweetType {
   _id: String!
-  owner: OwnerType!
+  owner: UserShortType!
   createdAt: String!
   comments: [CommentType!]!
 }
 
 type GetTweetByIdType {
   _id: String!
-  owner: OwnerType!
+  owner: UserShortType!
   description: String!
   media: [MediaObject!]!
   createdAt: String!
@@ -124,6 +160,9 @@ type Query {
   getTweets(query: QueryInput!): GetTweetType!
   getTweetById(query: GetItembyIdInput!): GetTweetByIdType!
   getComments(getCommentsInput: GetCommentsInput!): GetCommentsType!
+  getChats(query: QueryInput!): GetChatsType!
+  getChatById(chatInput: ChatInput!): GetChatById!
+  getMessages(getMessagesInput: GetMessageInput!): GetMessageType!
 }
 
 input QueryInput {
@@ -141,6 +180,16 @@ input GetCommentsInput {
   tweetId: String!
 }
 
+input ChatInput {
+  chatId: String!
+}
+
+input GetMessageInput {
+  limit: Int!
+  page: Int!
+  chatId: String!
+}
+
 type Mutation {
   createUser(createUserInput: CreateUserInput!): UserTypeResponse!
   login(loginUserInput: LoginUserInput!): UserTypeResponse!
@@ -152,6 +201,11 @@ type Mutation {
   deleteComment(deleteCommentInput: DeleteCommentInput!): DeleteCommentType!
   updateComment(updateCommentInput: UpdateCommentInput!): UpdateCommentType!
   refreshTokens(refreshTokensInput: RefreshTokensInput!): Tokens!
+  createChat(createChatInput: CreateChatInput!): Chat!
+  deleteChatInOneUser(chatInput: ChatInput!): Chat!
+  createMessage(createMessageInput: MessageInput!): Message!
+  updateMessage(updateMessageInput: UpdateMessageInput!): Message!
+  deleteMessage(deleteMessagesInput: DeleteMessageInput!): Message!
 }
 
 input CreateUserInput {
@@ -207,8 +261,29 @@ input RefreshTokensInput {
   refreshToken: String!
 }
 
+input CreateChatInput {
+  members: [String!]!
+}
+
+input MessageInput {
+  chatId: String!
+  message: String!
+}
+
+input UpdateMessageInput {
+  chatId: String!
+  message: String!
+  messageId: String!
+}
+
+input DeleteMessageInput {
+  chatId: String!
+  messageId: String!
+}
+
 type Subscription {
   addTweet: TweetType!
   updatedTweet(tweetId: String!): TweetType!
   comment(tweetId: String!): SubscriptionType!
+  subscriptionMessage(chatId: String!): SubscriptionMessageType!
 }

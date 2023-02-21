@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate {
       const user = await this.userService.findById(String(_id));
 
       const userData = {
-        ...pick(user, ['_id', 'email', 'username', 'roles']),
+        ...pick(user, ['_id', 'email', 'username', 'photo', 'roles']),
       };
 
       req.user = userData;

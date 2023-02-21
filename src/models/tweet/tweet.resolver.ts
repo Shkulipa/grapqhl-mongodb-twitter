@@ -4,7 +4,6 @@ import { CreateTweetInput } from './dto/createTweet.input';
 import { UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
 import { ICurrentUser } from 'src/common/interfaces/currentUser.interfaces';
-import { QueryInput } from 'src/common/types/query.type';
 import { GetTweetType } from './types/getTweets.type';
 import { GetItembyIdInput } from 'src/common/dto/getItembyId.input';
 import { CreateTweetType } from './types/createTweet.type';
@@ -19,6 +18,7 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
 import { UpdateTweetInput } from './dto/updateTweet.input';
 import { TweetType } from './types/tweet.type';
 import { pubSub } from 'src/common/constants/pubSub';
+import { QueryInput } from 'src/common/dto/query.type';
 
 @Resolver()
 export class TweetResolver {
