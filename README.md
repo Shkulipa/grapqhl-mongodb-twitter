@@ -16,7 +16,14 @@ after "yarn docker:compose", you can check in browser db by this link:
 http://localhost:8081 (for UI of Mongo DB)
 http://localhost:8001 (for UI of Redis) or use the RedisInsight(https://redis.com/redis-enterprise/redis-insight/) (connection local will be: host - redis, port - 6379)
 
-## CLI
+# Functional
+1. login(access + refresh token)
+2. create, update, delete  tweet
+3. create, update, delete comment for tweet
+4. websockets(subscriptions) for chats(chats exsist as minimum 2 users)
+5. redis(using in Tweets) + mongodb
+
+# CLI
 docs: https://docs.nestjs.com/cli/overview
 ```
 1. nest generate --help
