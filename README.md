@@ -21,7 +21,8 @@ http://localhost:8001 (for UI of Redis) or use the RedisInsight(https://redis.co
 2. create, update, delete  tweet
 3. create, update, delete comment for tweet
 4. websockets(subscriptions) for chats(chats exsist as minimum 2 users)
-5. redis(using in Tweets) + mongodb
+5. websockets(subscriptions) for all tweets & comments for one tweet
+6. redis(using in Tweets) + mongodb
 
 # CLI
 docs: https://docs.nestjs.com/cli/overview
